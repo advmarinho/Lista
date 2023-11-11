@@ -110,6 +110,7 @@
                     <label for="data">Data:</label>
                     <input type="date" class="form-control" id="data" onkeydown="desativarCampoAoPressionarEnter(this, event)">
                 </div>
+                
                 <div class="col-md-6">
                     <label for="cargaHoraria">Carga Horária:</label>
                     <input type="text" class="form-control" id="cargaHoraria" onkeydown="desativarCampoAoPressionarEnter(this)">
@@ -275,12 +276,12 @@
                 html2pdf(element, pdfOptions);
             }
         });
-
-        function desativarCampoAoPressionarEnter(campo, event) {
+        function desativarCampoAoPressionarEnter(campo) {
             if (event.key === "Enter") {
                 campo.readOnly = true;
             }
         }
+
         function desativarCheckbox(checkbox) {
             checkbox.disabled = true;
         }
@@ -288,4 +289,3 @@
 
 </body>
 </html>
-
