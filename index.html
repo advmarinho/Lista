@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,6 +73,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="page-version">
         <strong>Versão do Site 1.0</strong>
@@ -80,20 +82,24 @@
     <div class="background-image"></div>
 
     <div class="container">
-        <div class="d-flex align-items-center justify-content-center" style="background-color: #00B0F0; padding: 10px; height: 2.5em; border-radius: 8px;">
-            <img id="header-image" src="https://www.cromex.com.br/images/cromex.png" alt="Imagem" style="height: 2.2em; width: 3.5em; margin-right: 10px;">
-            <h1 class="mt-4 mb-4 text-center" style="color: #FFFFFF; font-family: 'Arial Narrow', sans-serif; font-size: 30px; flex: 1; font-weight: bold;">Lista de Presença</h1>
+        <div class="d-flex align-items-center justify-content-center"
+            style="background-color: #00B0F0; padding: 10px; height: 2.5em; border-radius: 8px;">
+            <img id="header-image" src="https://www.cromex.com.br/images/cromex.png" alt="Imagem"
+                style="height: 2.2em; width: 3.5em; margin-right: 10px;">
+            <h1 class="mt-4 mb-4 text-center"
+                style="color: #FFFFFF; font-family: 'Arial Narrow', sans-serif; font-size: 30px; flex: 1; font-weight: bold;">
+                Lista de Presença</h1>
         </div>
-        
+
         <div class="form-group mb-2">
             <br>
             <input type="checkbox" id="eventoInterno" class="mr-2" onchange="desativarCheckbox(this)">
             <label for="eventoInterno">Evento Interno:</label>
-        
+
             <input type="checkbox" id="eventoExterno" class="mr-2" onchange="desativarCheckbox(this)">
             <label for="eventoExterno">Evento Externo:</label>
         </div>
-        
+
         <div class="form-group">
             <label for="treinamento">Treinamento:</label>
             <input type="text" class="form-control" id="treinamento" onkeydown="desativarCampoAoPressionarEnter(this)">
@@ -108,184 +114,245 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="data">Data:</label>
-                    <input type="date" class="form-control" id="data" onkeydown="desativarCampoAoPressionarEnter(this, event)">
+                    <input type="date" class="form-control" id="data"
+                        onkeydown="desativarCampoAoPressionarEnter(this, event)">
                 </div>
-                
+
                 <div class="col-md-6">
                     <label for="cargaHoraria">Carga Horária:</label>
-                    <input type="text" class="form-control" id="cargaHoraria" onkeydown="desativarCampoAoPressionarEnter(this)">
+                    <input type="text" class="form-control" id="cargaHoraria"
+                        onkeydown="desativarCampoAoPressionarEnter(this)">
                 </div>
             </div>
         </div>
-        
+
         <div class="form-group">
             <input type="checkbox" id="spCheckbox" class="mr-2" onchange="desativarCheckbox(this)">
             <label for="spCheckbox">SP:</label>
-        
+
             <input type="checkbox" id="baCheckbox" class="mr-2" onchange="desativarCheckbox(this)">
             <label for="baCheckbox">BA:</label>
-        
+
             <input type="checkbox" id="onlineCheckbox" onchange="desativarCheckbox(this)">
             <label for="onlineCheckbox">Online:</label>
         </div>
         <div class="table-responsive">
-        <table class="table">
-            <thead class="lista-presenca-header">
-                <tr>
-                    <th scope="col">Linha</th>
-                    <th scope="col">RE/CPF</th>
-                    <th scope="col">Nome do Participante</th>
-                    <th scope="col">Setor/Processo</th>
-                    <th scope="col">Assinatura</th>
-                    <th scope="col">Confirmo Assinatura Digital</th>
-                </tr>
-            </thead>
+            <table class="table">
+                <thead class="lista-presenca-header">
+                    <tr>
+                        <th scope="col">Linha</th>
+                        <th scope="col">RE/CPF</th>
+                        <th scope="col">Nome do Participante</th>
+                        <th scope="col">Setor/Processo</th>
+                        <th scope="col">Assinatura</th>
+                        <th scope="col">Confirmo Assinatura Digital</th>
+                        <th scope="col">Data e Hora da Assinatura</th> <!-- Adicionando a coluna de data e hora da assinatura -->
+                    </tr>
+                </thead>
 
-            <tbody id="lista-presenca-body">
-            <!-- Conteúdo da lista de presença será adicionado aqui -->
-            </tbody>
-        </table>
+                <tbody id="lista-presenca-body">
+                    <!-- Conteúdo da lista de presença será adicionado aqui -->
+                </tbody>
+            </table>
 
-        <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#adicionarModal" style="background-color: #00B0F0;">
-            Adicionar Participante
-        </button>
-        
-        <button type="button" class="btn btn-success custom-border" id="salvarPDF">
-            Salvar em PDF
-        </button>
-    </div>
+            <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#adicionarModal"
+                style="background-color: #00B0F0;">
+                Adicionar Participante
+            </button>
 
-    <!-- Modal de Adição de Participante -->
-    <div class="modal fade" id="adicionarModal" tabindex="-1" role="dialog" aria-labelledby="adicionarModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="adicionarModalLabel">Adicionar Participante</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formAdicionar">
-                        <div class="form-group">
-                            <label for="cpf">RE/CPF:</label>
-                            <input type="text" class="form-control" id="cpf" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nome">Nome do Participante:</label>
-                            <input type="text" class="form-control" id="nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="setorProcesso">Setor/Processo:</label>
-                            <input type="text" class="form-control" id="setorProcesso">
-                        </div>
-                        <div class="form-group">
-                            <label for="rubrica">Rubrica:</label>
-                            <canvas id="rubricaCanvas" width="300" height="150"></canvas>
-                        </div>
-                        <div class="form-group">
-                            <label for="assinaturaValida">Confirmo Assinatura Digital, conforme MP 2.200-2/01, Art.10º§2º</label>
-                            <select class="form-control" id="assinaturaValida">
-                                <option value="true">Sim</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Adicionar</button>
-                    </form>
+            <button type="button" class="btn btn-success custom-border" id="salvarPDF">
+                Salvar em PDF
+            </button>
+        </div>
+
+        <!-- Modal de Adição de Participante -->
+        <div class="modal fade" id="adicionarModal" tabindex="-1" role="dialog" aria-labelledby="adicionarModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="adicionarModalLabel">Adicionar Participante</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formAdicionar">
+                            <div class="form-group">
+                                <label for="cpf">RE/CPF:</label>
+                                <input type="text" class="form-control" id="cpf" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nome">Nome do Participante:</label>
+                                <input type="text" class="form-control" id="nome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="setorProcesso">Setor/Processo:</label>
+                                <input type="text" class="form-control" id="setorProcesso" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="rubrica">Rubrica:</label>
+                                <canvas id="rubricaCanvas" width="350" height="150" required></canvas>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="assinaturaValida">Confirmo Assinatura Digital, conforme MP 2.200-2/01,
+                                    Art.10º§2º</label>
+                                <select class="form-control" id="assinaturaValida" required>
+                                    <option value="true">Sim</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary"
+                                    onclick="return verificarRubrica()">Adicionar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
-    <script src="https://unpkg.com/signature_pad"></script>
-    <script>
-        let formularioEnviado = false;
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+        <script src="https://unpkg.com/signature_pad"></script>
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const formAdicionar = document.getElementById('formAdicionar');
-            const listaPresencaBody = document.getElementById('lista-presenca-body');
-            const salvarPDFButton = document.getElementById('salvarPDF');
-            const rubricaCanvas = new SignaturePad(document.getElementById('rubricaCanvas'));
-            let idCounter = 1;
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let formularioEnviado = false;
+                let idCounter = 1;
+                const participantes = [];
 
-            formAdicionar.addEventListener('submit', function (event) {
-                event.preventDefault();
+                const formAdicionar = document.getElementById('formAdicionar');
+                const listaPresencaBody = document.getElementById('lista-presenca-body');
+                const salvarPDFButton = document.getElementById('salvarPDF');
+                const rubricaCanvas = new SignaturePad(document.getElementById('rubricaCanvas'));
 
-                if (!formularioEnviado) {
+                formAdicionar.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    adicionarParticipante();
+                    formAdicionar.reset();
+                    rubricaCanvas.clear();
+                    $('#adicionarModal').modal('hide');
+                });
+
+                salvarPDFButton.addEventListener('click', function () {
+                    salvarPDF();
+                });
+
+                const camposBloqueados = ['treinamento', 'instrutor', 'data', 'cargaHoraria', 'spCheckbox', 'baCheckbox', 'onlineCheckbox'];
+
+                camposBloqueados.forEach(function (campo) {
+                    const campoElement = document.getElementById(campo);
+                    if (campoElement) {
+                        campoElement.addEventListener('input', function () {
+                            if (formularioEnviado) {
+                                campoElement.disabled = true;
+                            }
+                        });
+                    }
+                });
+
+                // Adicionando funcionalidade de fechar o modal ao pressionar "Enter" nos campos do formulário
+                formAdicionar.addEventListener('keydown', function (event) {
+                    if (event.key === "Enter") {
+                        formAdicionar.reset();
+                        rubricaCanvas.clear();
+                        $('#adicionarModal').modal('hide');
+                    }
+                });
+
+                function adicionarParticipante() {
                     const reCpf = document.getElementById('cpf').value;
                     const nome = document.getElementById('nome').value;
                     const setorProcesso = document.getElementById('setorProcesso').value;
                     const rubrica = rubricaCanvas.toDataURL();
                     const assinaturaValida = document.getElementById('assinaturaValida').value === "true";
 
-                    adicionarParticipante(idCounter, reCpf, nome, setorProcesso, rubrica, assinaturaValida);
+                    const participante = {
+                        id: idCounter,
+                        reCpf,
+                        nome,
+                        setorProcesso,
+                        rubrica,
+                        assinaturaValida,
+                        dataHoraAssinatura: new Date().toLocaleString() // Adicionando a data e hora da assinatura
+                    };
+                    participantes.push(participante);
 
-                    formAdicionar.reset();
-                    rubricaCanvas.clear();
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>${participante.id}</td>
+                        <td>${participante.reCpf}</td>
+                        <td>${participante.nome}</td>
+                        <td>${participante.setorProcesso}</td>
+                        <td><img src="${participante.rubrica}" width="100" height="50" alt="Rubrica"></td>
+                        <td>${participante.assinaturaValida ? 'Sim' : 'Não'}</td>
+                        <td>${participante.dataHoraAssinatura}</td> <!-- Adicionando a coluna de data e hora da assinatura -->
+                    `;
+
+                    listaPresencaBody.appendChild(newRow);
+
                     idCounter++;
-
-                    $('#adicionarModal').modal('hide');
-                    formularioEnviado = true;
                 }
-            });
 
-            salvarPDFButton.addEventListener('click', function () {
-                salvarPDF();
-            });
+                function salvarPDF() {
+                    const pdfOptions = {
+                        margin: 10,
+                        filename: 'lista_presenca.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2 },
+                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    };
 
-            const camposBloqueados = ['treinamento', 'instrutor', 'data', 'cargaHoraria', 'spCheckbox', 'baCheckbox', 'onlineCheckbox'];
+                    const footerContent = `<div>Trilha: ${window.location.pathname} | Data e Hora da Assinatura: ${new Date().toLocaleString()}</div>`;
+                    pdfOptions.html2canvas = { scale: 2, y: window.scrollY };
 
-            camposBloqueados.forEach(function (campo) {
-                const campoElement = document.getElementById(campo);
-                if (campoElement) {
-                    campoElement.addEventListener('input', function () {
-                        if (formularioEnviado) {
-                            campoElement.disabled = true;
-                        }
-                    });
+                    const element = document.documentElement;
+
+                    html2pdf(element, pdfOptions);
                 }
+
             });
 
-            function adicionarParticipante(id, reCpf, nome, setorProcesso, rubrica, assinaturaValida) {
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                    <td>${id}</td>
-                    <td>${reCpf}</td>
-                    <td>${nome}</td>
-                    <td>${setorProcesso}</td>
-                    <td><img src="${rubrica}" width="100" height="50" alt="Rubrica"></td>
-                    <td>${assinaturaValida ? 'Sim' : 'Não'}</td>
-                `;
-                listaPresencaBody.appendChild(newRow);
+
+            function desativarCampoAoPressionarEnter(campo) {
+                if (event.key === "Enter") {
+                    campo.disabled = true;
+                }
             }
 
-            function salvarPDF() {
-                const element = document.documentElement;
-
-                const pdfOptions = {
-                    margin: 10,
-                    filename: 'lista_presenca.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-
-                html2pdf(element, pdfOptions);
+            function desativarCheckbox(checkbox) {
+                checkbox.disabled = true;
             }
-        });
-        function desativarCampoAoPressionarEnter(campo) {
-            if (event.key === "Enter") {
-                campo.readOnly = true;
+
+            function verificarRubrica() {
+                const rubricaCanvas = document.getElementById('rubricaCanvas');
+                const context = rubricaCanvas.getContext('2d');
+                const imageData = context.getImageData(0, 0, rubricaCanvas.width, rubricaCanvas.height);
+
+                // Verificar se a rubrica foi desenhada
+                for (let i = 0; i < imageData.data.length; i += 4) {
+                    const alpha = imageData.data[i + 3]; // Valor de transparência do pixel
+
+                    if (alpha !== 0) {
+                        // Se o pixel não for totalmente transparente, consideramos a rubrica desenhada
+                        return true;
+                    }
+                }
+
+                // Se nenhum pixel foi colorido, a rubrica não foi desenhada
+                alert('Por favor, desenhe a rubrica antes de enviar o formulário.');
+                return false;
             }
-        }
 
-        function desativarCheckbox(checkbox) {
-            checkbox.disabled = true;
-        }
-    </script>
+            function limparRubrica() {
+                const rubricaCanvas = document.getElementById('rubricaCanvas');
+                const context = rubricaCanvas.getContext('2d');
+                context.clearRect(0, 0, rubricaCanvas.width, rubricaCanvas.height);
+            }
 
+
+
+        </script>
 </body>
+
 </html>
