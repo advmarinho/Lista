@@ -108,7 +108,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="data">Data:</label>
-                    <input type="date" class="form-control" id="data" onkeydown="desativarCampoAoPressionarEnter(this)">
+                    <input type="date" class="form-control" id="data" onkeydown="desativarCampoAoPressionarEnter(this, event)">
                 </div>
                 <div class="col-md-6">
                     <label for="cargaHoraria">Carga Horária:</label>
@@ -276,9 +276,9 @@
             }
         });
 
-        function desativarCampoAoPressionarEnter(campo) {
+        function desativarCampoAoPressionarEnter(campo, event) {
             if (event.key === "Enter") {
-                campo.disabled = true;
+                campo.readOnly = true;
             }
         }
         function desativarCheckbox(checkbox) {
