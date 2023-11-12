@@ -10,6 +10,14 @@
         body {
             padding: 20px;
             margin-bottom: 3cm;
+            overflow: hidden;
+        }
+        
+        .background-image,
+        .footer-content {
+            opacity: 0;
+            /* Inicialmente oculto */
+            transition: opacity 0.3s ease;
         }
         
         .background-image {
@@ -33,7 +41,6 @@
             width: 100%;
             text-align: center;
             padding: 10px;
-            /* background-color: #f8f9fa; */
             z-index: 1;
         }
         
@@ -119,6 +126,7 @@
 </head>
 
 <body>
+
     <script>
         function desativarCampoAoPerderFoco(input) {
             input.setAttribute('readonly', 'true');
@@ -505,9 +513,10 @@
         </div>
 
 
-        <div class="background-image"></div>
+        <div class="background-image" onmouseover="showElement('.background-image')" onmouseout="hideElement('.background-image')"></div>
 
-        <div class="footer-content">
+        <div class="footer-content" onmouseover="showElement('.footer-content')" onmouseout="hideElement('.footer-content')">
+            <!-- Seu conteúdo do rodapé aqui -->
             <a href="https://www.linkedin.com/in/anderson-marinho-ads/" target="_blank" class="social-icons">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
@@ -522,6 +531,22 @@
             </a>
             <div>© 2023 - By Anderson Marinho - Todos os direitos reservados</div>
         </div>
+
+        <script>
+            function showElement(selector) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.style.opacity = 1;
+                }
+            }
+
+            function hideElement(selector) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.style.opacity = 0;
+                }
+            }
+        </script>
 
 </body>
 
