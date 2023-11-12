@@ -112,11 +112,20 @@
 
         <div class="form-group">
             <div class="row">
+
+
+                <script>
+                    function desativarCampoAoPerderFoco(input) {
+                        input.setAttribute('readonly', 'true');
+                    }
+                </script>
+
                 <div class="col-md-6">
                     <label for="data">Data:</label>
-                    <input type="date" class="form-control" id="data"
-                        onkeydown="desativarCampoAoPressionarEnter(this, event)">
+                    <input type="date" class="form-control" id="data" onblur="desativarCampoAoPerderFoco(this)">
                 </div>
+
+
 
                 <div class="col-md-6">
                     <label for="cargaHoraria">Carga Horária:</label>
@@ -262,11 +271,29 @@
                 // Adicionando funcionalidade de fechar o modal ao pressionar "Enter" nos campos do formulário
                 formAdicionar.addEventListener('keydown', function (event) {
                     if (event.key === "Enter") {
-                        formAdicionar.reset();
-                        rubricaCanvas.clear();
-                        $('#adicionarModal').modal('hide');
+                        var form = document.getElementById("formAdicionar");
+
+                        // Verifica a validade de todos os campos do formulário
+                        if (form.checkValidity()) {
+                            $('#adicionarModal').modal('unhide');
+                        }
                     }
                 });
+
+
+                function fecharCampoData() {
+                    var campoData = document.getElementById("data");
+                    campoData.setAttribute("readonly", "readonly");
+                }
+
+
+
+
+
+
+
+
+
 
                 function adicionarParticipante() {
                     const reCpf = document.getElementById('cpf').value;
