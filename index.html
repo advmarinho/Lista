@@ -53,7 +53,7 @@
 
         .lista-presenca-header th {
             font-family: 'Arial Narrow', sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             color: #ffffff;
             background-color: #00B0F0;
             border-radius: 4px;
@@ -87,7 +87,7 @@
             <img id="header-image" src="https://www.cromex.com.br/images/cromex.png" alt="Imagem"
                 style="height: 2.2em; width: 3.5em; margin-right: 10px;">
             <h1 class="mt-4 mb-4 text-center"
-                style="color: #FFFFFF; font-family: 'Arial Narrow', sans-serif; font-size: 30px; flex: 1; font-weight: bold;">
+                style="color: #FFFFFF; font-family: 'Arial Narrow', sans-serif; font-size: 28px; flex: 1; font-weight: bold;">
                 Lista de Presença</h1>
         </div>
 
@@ -146,7 +146,8 @@
                         <th scope="col">Setor/Processo</th>
                         <th scope="col">Assinatura</th>
                         <th scope="col">Confirmo Assinatura Digital</th>
-                        <th scope="col">Data e Hora da Assinatura</th> <!-- Adicionando a coluna de data e hora da assinatura -->
+                        <th scope="col">Data e Hora da Assinatura</th>
+                        <!-- Adicionando a coluna de data e hora da assinatura -->
                     </tr>
                 </thead>
 
@@ -163,6 +164,12 @@
             <button type="button" class="btn btn-success custom-border" id="salvarPDF">
                 Salvar em PDF
             </button>
+
+            <button type="button" class="btn custom-border" id="salvarTXT" style="background-color: orange;">
+                Salvar em TXT
+            </button>
+
+
         </div>
 
         <!-- Modal de Adição de Participante -->
@@ -286,7 +293,7 @@
                         <td>${participante.setorProcesso}</td>
                         <td><img src="${participante.rubrica}" width="100" height="50" alt="Rubrica"></td>
                         <td>${participante.assinaturaValida ? 'Sim' : 'Não'}</td>
-                        <td>${participante.dataHoraAssinatura}</td> <!-- Adicionando a coluna de data e hora da assinatura -->
+                        <td>${participante.dataHoraAssinatura.replace(/,/g, ' | ')}</td>
                     `;
 
                     listaPresencaBody.appendChild(newRow);
@@ -296,20 +303,23 @@
 
                 function salvarPDF() {
                     const pdfOptions = {
-                        margin: 10,
+                        margin: 0.5, // margem mínima de 0.5 mm
                         filename: 'lista_presenca.pdf',
-                        image: { type: 'jpeg', quality: 0.98 },
-                        html2canvas: { scale: 2 },
+                        image: { type: 'jpeg', quality: 0.80 }, // qualidade máxima
+                        html2canvas: { scale: 1.8, y: 0, scrollY: 0 },
                         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     };
 
-                    const footerContent = `<div>Trilha: ${window.location.pathname} | Data e Hora da Assinatura: ${new Date().toLocaleString()}</div>`;
-                    pdfOptions.html2canvas = { scale: 2, y: window.scrollY };
+                    const footerContent = `<div style="font-size: 10px;">Trilha: ${window.location.pathname} | Data e Hora da Assinatura: ${new Date().toLocaleString()}</div>`;
+                    pdfOptions.html2canvas = { scale: 1.8, y: 0, scrollY: 0 };
 
                     const element = document.documentElement;
+                    element.style.overflow = 'hidden';
 
                     html2pdf(element, pdfOptions);
                 }
+
+
 
             });
 
@@ -350,9 +360,65 @@
                 context.clearRect(0, 0, rubricaCanvas.width, rubricaCanvas.height);
             }
 
+            function salvarTXT() {
+                const dadosTXT = gerarDadosTXT();
 
+                // Cria um blob com os dados em formato de texto
+                const blob = new Blob([dadosTXT], { type: 'text/plain' });
+
+                // Cria uma URL do blob
+                const url = URL.createObjectURL(blob);
+
+                // Cria um link para o download
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'lista_presenca.txt';
+
+                // Adiciona o link ao corpo da página e aciona o clique no link
+                document.body.appendChild(a);
+                a.click();
+
+                // Remove o link do corpo da página
+                document.body.removeChild(a);
+
+                // Revoga a URL do blob para liberar recursos
+                URL.revokeObjectURL(url);
+            }
+
+            function gerarDadosTXT() {
+                // Aqui você pode criar uma string com os dados que deseja salvar em TXT
+                let dadosTXT = 'Dados da Página:\n\n';
+
+                // Adicione os dados específicos que deseja incluir, por exemplo:
+                dadosTXT += `Evento Interno: ${document.getElementById('eventoInterno').checked ? 'sim' : 'não'}\n`;
+                dadosTXT += `Evento Externo: ${document.getElementById('eventoExterno').checked ? 'sim' : 'não'}\n`;
+                dadosTXT += `Treinamento: ${document.getElementById('treinamento').value}\n`;
+                dadosTXT += `Instrutor: ${document.getElementById('instrutor').value}\n`;
+                dadosTXT += `Data: ${document.getElementById('data').value}\n`;
+                dadosTXT += `Carga Horária: ${document.getElementById('cargaHoraria').value}\n`;
+                dadosTXT += `Treinamneto SP: ${document.getElementById('spCheckbox').checked ? 'sim' : 'não'}\n`;
+                dadosTXT += `Treinamneto BA: ${document.getElementById('baCheckbox').checked ? 'sim' : 'não'}\n`;
+                dadosTXT += `Treinamneto Online: ${document.getElementById('onlineCheckbox').checked ? 'sim' : 'não'}\n\n`;
+
+                const linhasTabela = document.querySelectorAll('#lista-presenca-body tr');
+                linhasTabela.forEach(function (linha) {
+                    dadosTXT += `Linha: ${linha.cells[0].innerText}\n`;
+                    dadosTXT += `RE/CPF: ${linha.cells[1].innerText}\n`;
+                    dadosTXT += `Nome do Participante: ${linha.cells[2].innerText}\n`;
+                    dadosTXT += `Setor/Processo: ${linha.cells[3].innerText}\n`;
+                    dadosTXT += `Figura da Assinatura: ${linha.cells[4].innerText.trim() ? 'Não' : 'Figura'}\n`;
+                    dadosTXT += `Confirmo Assinatura Digital: ${linha.cells[5].innerText}\n`;
+                    dadosTXT += `Data e Hora da Assinatura: ${linha.cells[6].innerText}\n\n`;
+                });
+                return dadosTXT;
+            }
+
+            document.getElementById('salvarTXT').addEventListener('click', function () {
+                salvarTXT();
+            });
 
         </script>
+    </div>
 </body>
 
 </html>
